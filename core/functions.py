@@ -10,6 +10,11 @@ from fastapi import Depends, HTTPException
 from core.database import get_db
 from apps.users.models import User, RoleMapping
 
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 SECRET_KEY = "ffbb9ff4ce58ef476a783e2b4f38e087757df55fdfab667f2a3c8f32a1631783"
@@ -59,3 +64,26 @@ def hash_password(password: str) -> str:
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
+
+
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+EMAIL_ADDRESS = "smuthukumar498@gmail.com"
+EMAIL_PASSWORD = "ttmf ozzs luru bayc"
+
+def send_email(to_email,subject,message):
+    msg = MIMEMultipart()
+    msg["From"] = EMAIL_ADDRESS
+    msg["To"] = to_email
+    msg["Subject"] = subject
+    msg.attach(MIMEText(message, "plain"))
+
+    try:
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server.starttls()
+        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        server.send_message(msg)
+        server.quit()
+        return {"message": "Email sent successfully"}
+    except Exception as e:
+        return {"error": str(e)}

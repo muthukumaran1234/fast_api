@@ -6,6 +6,7 @@ import apps.users.models
 from core.database import Base, engine
 from alembic import context
 from core.database import Base
+# below is to import the models which are extending Base class
 from apps.users.models import User, RoleMaster, RoleMapping 
 
 
