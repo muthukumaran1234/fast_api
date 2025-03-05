@@ -21,7 +21,7 @@ def jwt_payload_handler(user, db: Session):
     Generate a custom JWT payload, including user roles.
     """
     if user.last_login_role is None:
-        role_mapping = db.query(RoleMapping).filter(RoleMapping.user_id == user.id).order_by(RoleMapping.role_id).first()
+        role_mapping = db.query(RoleMapping).filter(RoleMapping.user_id == user.id).order_by(RoleMapping.created_at).first()
         role_name = role_mapping.role_obj.name if role_mapping and role_mapping.role_obj else "customer"
     else:
         role_name = user.last_login_role

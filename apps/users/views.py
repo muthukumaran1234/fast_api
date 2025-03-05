@@ -5,7 +5,7 @@ from . import models, schemas
 from apps.users.models import RoleMaster
 from apps.users.schemas import RoleCreate
 from core.functions import hash_password
-
+from sqlalchemy import case
 def get_users(db: Session):
     users = db.query(models.User).all()
     user_data = [{"id": user.id, "username": user.username, "email": user.email} for user in users]
@@ -24,14 +24,16 @@ def get_user(db: Session, user_id: int):
 
 def create_user(db: Session, user: schemas.UserCreate):
     password = hash_password(user.password)
-    db_user = models.User(username=user.username, email=user.email, password=password)
+    db_user = models.User(username=user.username, email=user.email, password=password,last_login_role=None)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
 
-    role_names = user.roles if user.roles else ["Customer"]
+    role_names = user.roles if user.roles else ["customer"]
+    #to ordering the roles 
+    order_cases = [case((models.RoleMaster.name == name, index)) for index, name in enumerate(role_names)]
 
-    roles = db.query(models.RoleMaster).filter(models.RoleMaster.name.in_(role_names)).all()
+    roles = (db.query(models.RoleMaster).filter(models.RoleMaster.name.in_(role_names)).order_by(*order_cases).all())
     
     if not roles:
         raise HTTPException(status_code=400, detail="Invalid roles provided.")
