@@ -12,6 +12,7 @@ class User(Base):
     password = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     is_active = Column(Boolean, default=True)
+    last_login_role = Column(String, nullable=True)
 
     role_mappings = relationship("RoleMapping", back_populates="user_obj")
 
