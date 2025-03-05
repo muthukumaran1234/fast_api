@@ -12,7 +12,7 @@ from apps.users.models import User, RoleMapping
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
-SECRET_KEY = "your_secret_key"
+SECRET_KEY = "ffbb9ff4ce58ef476a783e2b4f38e087757df55fdfab667f2a3c8f32a1631783"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60  
 
