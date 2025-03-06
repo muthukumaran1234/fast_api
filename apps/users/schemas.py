@@ -28,3 +28,6 @@ class RoleCreate(BaseModel):
 
 class RoleResponse(RoleCreate):
     id: int
+class RefreshTokenRequest(BaseModel):
+    userid: int
+    change_role: str

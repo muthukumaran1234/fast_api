@@ -1,10 +1,10 @@
 import json
-from fastapi import HTTPException, Response
+from fastapi import Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from . import models, schemas
 from apps.users.models import RoleMaster
 from apps.users.schemas import RoleCreate
-from core.functions import hash_password, send_email
+from core.functions import get_current_user, hash_password, send_email
 from sqlalchemy import case
 
 def get_users(db: Session):
@@ -53,8 +53,9 @@ def get_roles(db: Session):
     return Response(content=json.dumps({"status": "success", "message": "Roles fetched successfully", "data": role_data}), status_code=200)
 
 
-def create_role(db: Session, role: RoleCreate, current_user: str):
-    if current_user != "admin":
+def create_role(db: Session, role: RoleCreate,current_user: dict):
+    print('current user',current_user)
+    if current_user["role"] != "admin":
         raise HTTPException(status_code=401, detail="You are not authenticated to perform this action")
 
     new_role = RoleMaster(name=role.name, description=role.description)

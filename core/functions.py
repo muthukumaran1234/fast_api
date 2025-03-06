@@ -13,13 +13,15 @@ from apps.users.models import User, RoleMapping
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+from fastapi import FastAPI, Security, Depends, HTTPException
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 SECRET_KEY = "ffbb9ff4ce58ef476a783e2b4f38e087757df55fdfab667f2a3c8f32a1631783"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60  
+security = HTTPBearer()
 
 def jwt_payload_handler(user, db: Session):
     """
@@ -87,3 +89,19 @@ def send_email(to_email,subject,message):
         return {"message": "Email sent successfully"}
     except Exception as e:
         return {"error": str(e)}
+    
+
+
+def get_current_user(token: HTTPAuthorizationCredentials = Security(security)):
+    try:
+        payload = jwt.decode(token.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        userid: str = payload.get("user_id")
+        user_role: str = payload.get("user_role")
+        if userid is None or user_role is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        return {"user_id": userid, "role": user_role}
+
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token has expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
