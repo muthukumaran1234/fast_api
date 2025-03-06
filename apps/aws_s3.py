@@ -2,7 +2,6 @@ import json
 
 with open("././env.json") as f:
     config = json.load(f)
-    
 
 AWS_REGION= config["AWS_REGION"]
 AWS_SNS_ARN= config["AWS_SNS_ARN"] 

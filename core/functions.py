@@ -1,3 +1,4 @@
+import json
 import jwt
 import uuid
 from datetime import datetime, timedelta
@@ -18,9 +19,12 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
-SECRET_KEY = "ffbb9ff4ce58ef476a783e2b4f38e087757df55fdfab667f2a3c8f32a1631783"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60  
+with open("././env.json") as f:
+    config = json.load(f)
+
+SECRET_KEY = config["SECRET_KEY"]
+ALGORITHM = config["ALGORITHM"]
+ACCESS_TOKEN_EXPIRE_MINUTES = config["ACCESS_TOKEN_EXPIRE_MINUTES"]  
 security = HTTPBearer()
 
 def jwt_payload_handler(user, db: Session):

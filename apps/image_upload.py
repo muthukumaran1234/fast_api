@@ -7,13 +7,15 @@ from core.database import get_db
 
 image = APIRouter()
 
-url = "https://uicdyanzztdwumhxqzhl.supabase.co"
-key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpY2R5YW56enRkd3VtaHhxemhsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MTA5NDQ3MSwiZXhwIjoyMDU2NjcwNDcxfQ.K4hIRbuyNPEsR5lskV2tucCd5mogWNT78PzGesYgmus"
+import json
+
+with open("././env.json") as f:
+    config = json.load(f)
 
 # Supabase Config
-SUPABASE_URL = url      #"https://your-project-id.supabase.co"
-SUPABASE_KEY = key      # "your-supabase-service-key"
-SUPABASE_BUCKET = "fast_api_images"
+SUPABASE_URL = config["SUPABASE_URL"]     
+SUPABASE_KEY = config["SUPABASE_KEY"]  
+SUPABASE_BUCKET = config[ "SUPABASE_BUCKET"]
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
