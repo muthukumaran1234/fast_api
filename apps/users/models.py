@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
+from sqlalchemy import JSON, Column, Integer, String, Boolean, DateTime, ForeignKey
 from core.database import Base
 from sqlalchemy.orm import relationship
 import datetime
@@ -13,6 +13,7 @@ class User(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     is_active = Column(Boolean, default=True)
     last_login_role = Column(String, nullable=True)
+    image_urls = Column(JSON, nullable=True)
 
     role_mappings = relationship("RoleMapping", back_populates="user_obj")
 
