@@ -25,7 +25,6 @@ class RoleMaster(Base):
     description = Column(String, nullable=True)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-    modified_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
     modified_by = Column(Integer, nullable=True)
 
     role_mappings = relationship("RoleMapping", back_populates="role_obj")
