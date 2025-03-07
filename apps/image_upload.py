@@ -20,7 +20,6 @@ SUPABASE_BUCKET = config[ "SUPABASE_BUCKET"]
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 public_url = supabase.storage.from_(SUPABASE_BUCKET).get_public_url("images/vigay.jpg")
-print("Public URL:", public_url)
 
 
 @image.post("/upload/{user_id}")

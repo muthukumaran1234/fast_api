@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 from apps.users.models import RoleMaster
 from apps.users.schemas import RoleCreate
-from core.functions import get_current_user, hash_password, send_email
+from core.utils import get_current_user, hash_password, send_email
 from sqlalchemy import case
 
 def get_users(db: Session):

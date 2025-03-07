@@ -6,7 +6,7 @@ from apps.users import views
 from apps.users.schemas import RoleCreate, RoleResponse,UserCreate,UserResponse,TokenResponse,RefreshTokenRequest
 from typing import List
 from apps.users.models import User,RoleMaster,RoleMapping
-from core.functions import generate_jwt_token, get_current_user, verify_password,jwt_encode_handler
+from core.utils import generate_jwt_token, get_current_user, verify_password,jwt_encode_handler
 from datetime import datetime, timedelta
 router = APIRouter()
 
