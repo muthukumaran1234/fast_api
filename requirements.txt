@@ -1,0 +1,3 @@
+fastapi[all]    # Installs FastAPI with all dependencies.
+tortoise-orm    # Installs the ORM.
+aerich          # Handles migrations (like Django’s makemigrations).
