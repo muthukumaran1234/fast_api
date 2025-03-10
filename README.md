@@ -1,5 +1,8 @@
 # fast_api
 
+<!-- to clear the cache files -->
+# Get-ChildItem -Path . -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
+
 <!-- for Migration -->
 <!-- the below line is for first time only to create files -->
 # aerich init -t settings.database.TORTOISE_ORM

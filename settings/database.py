@@ -1,7 +1,8 @@
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi import FastAPI
 
-DATABASE_URL = "postgres://postgres:n7SJK*H!!NFzsNt@db.okbzsjmrejnmhbhabdez.supabase.co:5432/postgres"
+# DATABASE_URL = "postgres://postgres:n7SJK*H!!NFzsNt@db.okbzsjmrejnmhbhabdez.supabase.co:5432/postgres"
+DATABASE_URL = "postgres://postgres.okbzsjmrejnmhbhabdez:n7SJK*H!!NFzsNt@aws-0-ap-south-1.pooler.supabase.com:6543/postgres"
 
 # FastAPI function to initialize database
 def init_db(app: FastAPI):
